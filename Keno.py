@@ -21,7 +21,6 @@ json: för att spara info
 from os import system
 
 #vi använder system för att få styles om man inte har den installerat
-system("pip install styles")
 import styles, random, time, json
 
 system("cls")   # Detta är för att terminalen annars kommer vara ganska ful av ord
