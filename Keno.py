@@ -447,9 +447,8 @@ class GamblingGame():
 
         #väljer en kung siffra
         if self.kungkeno == True:
-            #x = random.randint(1, 20)
-            #self.kungSiffra = self.spel_siffror[(x-1)]
-            self.kungSiffra = 65
+            x = random.randint(1, 20)
+            self.kungSiffra = self.spel_siffror[(x-1)]
     #---------------------------------------
 
 
@@ -599,11 +598,3 @@ class GamblingGame():
         except:
             print(styles.Colors["WARNING"] + styles.Colors["BOLD"] + "Du kan nu vinna UPP TILL 100 000$ på bara någon runda!!!")
     #---------------------------------------
-
-
-
-
-
-"""starta programmet:"""
-if __name__ == "__main__":
-    GamblingGame().main()
