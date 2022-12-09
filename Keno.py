@@ -293,16 +293,16 @@ def isInt(x=str(None)):
 
 #här är spelet
 class GamblingGame():
+    """
+    adGeneration:  Generate ads, this is by default true
+    infoSaver:     Save info, this is true by default
+
+    adGeneration don't need infoSaver to be True, but you
+    get better ads with infoSaver = True
+    and players bank account can be saved with infoSaver
+    """
     #här under kommer viktiga variabler att "sättas" typ self.name = name
     def __init__(self, adGeneration=bool(True), infoSaver=bool(True)):
-        """
-        adGeneration:  Generate ads, this is by default true
-        infoSaver:     Save info, this is true by default
-
-        adGeneration don't need infoSaver to be True, but you
-        get better ads with infoSaver = True
-        and players bank account can be saved with infoSaver
-        """
         #extras:
         self.generAds = adGeneration
         self.saveInfo = infoSaver
