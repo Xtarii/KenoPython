@@ -294,7 +294,19 @@ def isInt(x=str(None)):
 #här är spelet
 class GamblingGame():
     #här under kommer viktiga variabler att "sättas" typ self.name = name
-    def __init__(self):
+    def __init__(self, adGeneration=bool(True), infoSaver=bool(True)):
+        """
+        adGeneration:  Generate ads, this is by default true
+        infoSaver:     Save info, this is true by default
+
+        adGeneration don't need infoSaver to be True, but you
+        get better ads with infoSaver = True
+        and players bank account can be saved with infoSaver
+        """
+        #extras:
+        self.generAds = adGeneration
+        self.saveInfo = infoSaver
+
         #reklam generation
         self.GenereraAds()
 
@@ -528,36 +540,37 @@ class GamblingGame():
 
     #här under kommer vi att spara info så att vi kan generera reklam - denna börs inte tas bort
     def SparaInfo(self):
-        try:
-            with open("appInfo.json") as f:
-                data = json.load(f)
+        if self.saveInfo == True:
+            try:
+                with open("appInfo.json") as f:
+                    data = json.load(f)
 
-                #sen sparar vi och skriver över allt som ska skriva över
-                data["senastAnvändt"].append(self.current_siffror)
-                data["pengar"] += self.valet
+                    #sen sparar vi och skriver över allt som ska skriva över
+                    data["senastAnvändt"].append(self.current_siffror)
+                    data["pengar"] += self.valet
 
-                #här räknar vi ut vad som aftast används
-                data["medelAnvänr"] = self.vilketÅterkommerFlestGånger(data["senastAnvändt"])
+                    #här räknar vi ut vad som aftast används
+                    data["medelAnvänr"] = self.vilketÅterkommerFlestGånger(data["senastAnvändt"])
 
+                    with open("appInfo.json", "w") as f:
+                        json.dump(data, f, indent=4)
+
+            except:
                 with open("appInfo.json", "w") as f:
-                    json.dump(data, f, indent=4)
+                    #här bygger upp info delen om den inte redan finns
+                    user_info = {
+                            "namn": self.förnamn,
+                            "efternamn": self.efternamn,
+                            "pengar": self.valet,
+                            "senastAnvändt": [],
+                            "medelAnvänr": 0,
+                        }
 
-        except:
-            with open("appInfo.json", "w") as f:
-                #här bygger upp info delen om den inte redan finns
-                user_info = {
-                        "namn": self.förnamn,
-                        "efternamn": self.efternamn,
-                        "pengar": self.valet,
-                        "senastAnvändt": [],
-                        "medelAnvänr": 0,
-                    }
+                    #sen sparar vi och skriver över medelvärde
+                    user_info["senastAnvändt"].append(self.current_siffror)
+                    user_info["medelAnvänr"] = self.vilketÅterkommerFlestGånger(user_info["senastAnvändt"])
 
-                #sen sparar vi och skriver över medelvärde
-                user_info["senastAnvändt"].append(self.current_siffror)
-                user_info["medelAnvänr"] = self.vilketÅterkommerFlestGånger(user_info["senastAnvändt"])
-
-                json.dump(user_info, f, indent=4)
+                    json.dump(user_info, f, indent=4)
     #-------------------------------------------------------------------------------------------
 
 
@@ -571,30 +584,31 @@ class GamblingGame():
 
     #här skapas alla ads: OBS - ta inte bort
     def GenereraAds(self):
-        try:
-            with open("appInfo.json") as f:
-                data = json.load(f)
+        if self.generAds == True:
+            try:
+                with open("appInfo.json") as f:
+                    data = json.load(f)
 
-                medelvärd = data["medelAnvänr"]
-                pengar = str(100000000) + "$"
-                sattsning = str(medelvärd)
+                    medelvärd = data["medelAnvänr"]
+                    pengar = str(100000000) + "$"
+                    sattsning = str(medelvärd)
 
-                print(styles.Colors["WARNING"] + """
-                https://www.fancytextpro.com/BigTextGenerator?qtext=%24Jack%20Pott%24
+                    print(styles.Colors["WARNING"] + """
+                    https://www.fancytextpro.com/BigTextGenerator?qtext=%24Jack%20Pott%24
 
-                   $$\       $$$$$\                     $$\             $$$$$$$\             $$\     $$\        $$\    
-                 $$$$$$\     \__$$ |                    $$ |            $$  __$$\            $$ |    $$ |     $$$$$$\  
-                $$  __$$\       $$ | $$$$$$\   $$$$$$$\ $$ |  $$\       $$ |  $$ | $$$$$$\ $$$$$$\ $$$$$$\   $$  __$$\ 
-                $$ /  \__|      $$ | \____$$\ $$  _____|$$ | $$  |      $$$$$$$  |$$  __$$\\_$$  _|\_$$  _|  $$ /  \__|
-                \$$$$$$\  $$\   $$ | $$$$$$$ |$$ /      $$$$$$  /       $$  ____/ $$ /  $$ | $$ |    $$ |    \$$$$$$\  
-                 \___ $$\ $$ |  $$ |$$  __$$ |$$ |      $$  _$$<        $$ |      $$ |  $$ | $$ |$$\ $$ |$$\  \___ $$\ 
-                $$\  \$$ |\$$$$$$  |\$$$$$$$ |\$$$$$$$\ $$ | \$$\       $$ |      \$$$$$$  | \$$$$  |\$$$$  |$$\  \$$ |
-                \$$$$$$  | \______/  \_______| \_______|\__|  \__|      \__|       \______/   \____/  \____/ \$$$$$$  |
-                 \_$$  _/                                                                                     \_$$  _/ 
-                   \ _/                                                                                         \ _/
-                """)
-                print(styles.Colors["WARNING"] + styles.Colors["BOLD"] + f"Nu kan du vinna UPP TILL {pengar} om du sattsar på {sattsning} stycken siffror!!!")
-        
-        except:
-            print(styles.Colors["WARNING"] + styles.Colors["BOLD"] + "Du kan nu vinna UPP TILL 100 000$ på bara någon runda!!!")
+                    $$\       $$$$$\                     $$\             $$$$$$$\             $$\     $$\        $$\    
+                    $$$$$$\     \__$$ |                    $$ |            $$  __$$\            $$ |    $$ |     $$$$$$\  
+                    $$  __$$\       $$ | $$$$$$\   $$$$$$$\ $$ |  $$\       $$ |  $$ | $$$$$$\ $$$$$$\ $$$$$$\   $$  __$$\ 
+                    $$ /  \__|      $$ | \____$$\ $$  _____|$$ | $$  |      $$$$$$$  |$$  __$$\\_$$  _|\_$$  _|  $$ /  \__|
+                    \$$$$$$\  $$\   $$ | $$$$$$$ |$$ /      $$$$$$  /       $$  ____/ $$ /  $$ | $$ |    $$ |    \$$$$$$\  
+                    \___ $$\ $$ |  $$ |$$  __$$ |$$ |      $$  _$$<        $$ |      $$ |  $$ | $$ |$$\ $$ |$$\  \___ $$\ 
+                    $$\  \$$ |\$$$$$$  |\$$$$$$$ |\$$$$$$$\ $$ | \$$\       $$ |      \$$$$$$  | \$$$$  |\$$$$  |$$\  \$$ |
+                    \$$$$$$  | \______/  \_______| \_______|\__|  \__|      \__|       \______/   \____/  \____/ \$$$$$$  |
+                    \_$$  _/                                                                                     \_$$  _/ 
+                    \ _/                                                                                         \ _/
+                    """)
+                    print(styles.Colors["WARNING"] + styles.Colors["BOLD"] + f"Nu kan du vinna UPP TILL {pengar} om du sattsar på {sattsning} stycken siffror!!!")
+            
+            except:
+                print(styles.Colors["WARNING"] + styles.Colors["BOLD"] + "Du kan nu vinna UPP TILL 100 000$ på bara någon runda!!!")
     #---------------------------------------
