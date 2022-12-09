@@ -437,6 +437,7 @@ class GamblingGame():
                 return int(antal)
     def vilkaSiffrorVäljs(self, antal=int(1)):
         #här välja alla siffror som användaren vill chansa med
+        print(styles.Colors["WARNING"] + "\nVälj mellan 1 - 70:")
         for x in range(antal):
             #jag vet att vi har en till loop i en loop, men det är för att jag inte vill ha errors
             #och vi använder run = True, för bara True funkade inte
@@ -596,7 +597,7 @@ class GamblingGame():
                     print(styles.Colors["WARNING"] + """
                     https://www.fancytextpro.com/BigTextGenerator?qtext=%24Jack%20Pott%24
 
-                    $$\       $$$$$\                     $$\             $$$$$$$\             $$\     $$\        $$\    
+                      $$\       $$$$$\                     $$\             $$$$$$$\             $$\     $$\        $$\    
                     $$$$$$\     \__$$ |                    $$ |            $$  __$$\            $$ |    $$ |     $$$$$$\  
                     $$  __$$\       $$ | $$$$$$\   $$$$$$$\ $$ |  $$\       $$ |  $$ | $$$$$$\ $$$$$$\ $$$$$$\   $$  __$$\ 
                     $$ /  \__|      $$ | \____$$\ $$  _____|$$ | $$  |      $$$$$$$  |$$  __$$\\_$$  _|\_$$  _|  $$ /  \__|
@@ -605,7 +606,7 @@ class GamblingGame():
                     $$\  \$$ |\$$$$$$  |\$$$$$$$ |\$$$$$$$\ $$ | \$$\       $$ |      \$$$$$$  | \$$$$  |\$$$$  |$$\  \$$ |
                     \$$$$$$  | \______/  \_______| \_______|\__|  \__|      \__|       \______/   \____/  \____/ \$$$$$$  |
                     \_$$  _/                                                                                     \_$$  _/ 
-                    \ _/                                                                                         \ _/
+                      \ _/                                                                                         \ _/
                     """)
                     print(styles.Colors["WARNING"] + styles.Colors["BOLD"] + f"Nu kan du vinna UPP TILL {pengar} om du sattsar på {sattsning} stycken siffror!!!")
             
